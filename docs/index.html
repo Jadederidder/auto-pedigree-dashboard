@@ -234,7 +234,7 @@ tfoot td:not(:first-child){text-align:right}
     <table>
       <thead><tr>
         <th>Month</th>
-        <th style="color:var(--green)">&#x2714; Collected</th>
+        <th style="color:var(--green)">&#x2714; Loaded for Collection</th>
         <th style="color:var(--orange)">&#x2715; Unsuccessful Debits</th>
         <th>Total Loaded</th>
         <th>Commission (R)</th>
@@ -295,7 +295,7 @@ var ICONS={
   months:    {bg:"#e8f5e9",br:"#a5d6a7",c:"#1b5e20",p:"M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"}
 };
 var kpiDefs=[
-  {label:"Total Commission",  value:"R\u00a077.1k",              sub:fmt(tot),                    cls:"ksky",icon:"commission",badge:"Collected",  bbg:"rgba(0,174,239,0.12)",  bc:"#0088c4"},
+  {label:"Total Commission",  value:"R\u00a077.1k",              sub:fmt(tot),                    cls:"ksky",icon:"commission",badge:"Commission Paid",  bbg:"rgba(0,174,239,0.12)",  bc:"#0088c4"},
   {label:"Net Members Paid",  value:totMem.toLocaleString(),     sub:"Successfully collected",    cls:"",    icon:"members",   badge:"Active",     bbg:"rgba(48,48,160,0.1)",   bc:"#3030a0"},
   {label:"Avg Commission/Mo", value:fmt(Math.round(avg*100)/100),sub:"Monthly average payout",   cls:"knav",icon:"avgcomm",   badge:"Per Month",  bbg:"rgba(184,96,0,0.12)",   bc:"#b86000"},
   {label:"Peak Month",        value:peak.month,                  sub:fmt(peak.collection),        cls:"kred",icon:"peak",      badge:"Highest",    bbg:"rgba(232,25,44,0.12)",  bc:"#b81020"},
@@ -385,17 +385,17 @@ function downloadExcel(d,mdata){
   var collectedList=mdata.collected||[];
   var failedList=mdata.failed||[];
 
-  // Sheet 1: Collected Members — verified count shown in header
+  // Sheet 1: Loaded for Collection — verified count shown in header
   var wsC=[
-    ["Auto Pedigree Commission Collections \u2014 "+d.month+" \u2014 Collected Members"],
+    ["Auto Pedigree Commission Collections \u2014 "+d.month+" \u2014 Loaded for Collection"],
     ["Verified net collected: "+d.collected+" members  |  Period: "+d.period],
     [""],
     ["#","Member Name","Status"]
   ];
-  collectedList.forEach(function(n,i){wsC.push([i+1,n,"Collected"])});
+  collectedList.forEach(function(n,i){wsC.push([i+1,n,"Loaded for Collection"])});
   var sheetC=XLSX.utils.aoa_to_sheet(wsC);
   sheetC["!cols"]=[{wch:5},{wch:44},{wch:14}];
-  XLSX.utils.book_append_sheet(wb2,sheetC,"Collected Members");
+  XLSX.utils.book_append_sheet(wb2,sheetC,"Loaded for Collection");
 
   // Sheet 2: Unsuccessful Debits — all entries including multi-attempt duplicates
   if(failedList.length>0){
@@ -417,7 +417,7 @@ function downloadExcel(d,mdata){
     ["Auto Pedigree Commission Collections \u2014 Summary"],[""],
     ["Month",d.month],["Period",d.period],[""],
     ["Category","Count"],
-    ["Net Collected Members",d.collected],
+    ["Net Loaded for Collection (Commission Basis)",d.collected],
     ["Unsuccessful Debit Order Entries",d.failed],
     ["Total Members Loaded",d.total],[""],
     ["Single Members (net)",d.single],
@@ -458,7 +458,7 @@ function renderClientList(){
       var st=document.createElement("span");
       st.className="client-status "+(curTab==="col"?"cs-col":"cs-fail");
       st.textContent = curTab==="col"
-        ? (bothSet2[name] ? "Collected*" : "Collected")
+        ? (bothSet2[name] ? "Loaded for Collection" : "Loaded for Collection")
         : (bothSet2[name] ? "Unsuccessful*" : "Unsuccessful");
       row.appendChild(num); row.appendChild(nm); row.appendChild(st); listEl.appendChild(row);
     });
@@ -502,7 +502,7 @@ function showModal(i){
   });
   if(hasFailed){
     var ds=document.createElement("div"); ds.className="debit-summary";
-    [{cls:"dc-green",lbl:"Successfully Collected",sub:"Debit order processed",cnt:d.collected},
+    [{cls:"dc-green",lbl:"Loaded for Collection",sub:"Submitted to bank for collection",cnt:d.collected},
      {cls:"dc-orange",lbl:"Unsuccessful Debit Orders",sub:"Debit order returned/failed",cnt:d.failed}
     ].forEach(function(dc){
       var c=document.createElement("div"); c.className="debit-card "+dc.cls;
@@ -519,7 +519,7 @@ function showModal(i){
   var tabs=document.createElement("div"); tabs.className="clients-tabs";
   var tC=document.createElement("button"); tC.id="tabCol"; tC.className="ctab tab-col";
   var collTotal=(mdata.collected||[]).length+(mdata.both||[]).length;
-  tC.innerHTML="\u2714 Collected ("+collTotal+")";
+  tC.innerHTML="Loaded for Collection ("+collTotal+")";
   tC.addEventListener("click",function(){curTab="col";curSearch="";document.getElementById("clientSearch").value="";renderClientList()});
   tabs.appendChild(tC);
   if(hasFailed){
