@@ -1,28 +1,8 @@
 {
-  "_test_only": "PREVIEW DATA — May'26 numbers are fabricated. Replace with empty `monthly: []` or delete this file entirely before merging feat/json-merge to main. The live ap_dashboard_sync.py workflow will overwrite this file from the 5th of May 2026 onwards.",
-  "generated_at": "2026-04-25T10:30:00+02:00",
-  "monthly": [
-    {
-      "month": "2026-04",
-      "singles": 0,
-      "families": 0,
-      "net": 0,
-      "single_commission": 0,
-      "family_commission": 0,
-      "total_commission": 0
-    },
-    {
-      "month": "2026-05",
-      "singles": 200,
-      "families": 10,
-      "net": 210,
-      "single_commission": 4900,
-      "family_commission": 385,
-      "total_commission": 5285
-    }
-  ],
+  "generated_at": "2026-04-25T00:00:00+02:00",
+  "monthly": [],
   "totals": {
-    "cumulative_net": 210,
-    "cumulative_commission": 5285
+    "cumulative_net": 0,
+    "cumulative_commission": 0
   }
 }
