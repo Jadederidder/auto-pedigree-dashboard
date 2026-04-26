@@ -171,6 +171,32 @@ tfoot td:not(:first-child){text-align:right}
 .mpf-i{flex-shrink:0;color:var(--sky-dk);font-size:14px;margin-top:1px}
 @media(max-width:1024px){.kpi-grid{grid-template-columns:repeat(3,1fr)}.main-grid{grid-template-columns:1fr}}
 @media(max-width:640px){.page{padding:1rem}.kpi-grid{grid-template-columns:repeat(2,1fr)}.rate-row{grid-template-columns:1fr}}
+
+/* Mobile (≤768px) — purely additive overrides; desktop ≥769px unchanged */
+@media(max-width:768px){
+  /* Header top: stack logo+subtitle above meta, smaller padding */
+  .header-top{flex-direction:column;align-items:stretch;height:auto;padding:0.75rem 1rem;gap:10px}
+  .hbrand{justify-content:flex-start}
+  .hlogo{height:42px}
+  .hdivider{margin:0 14px;height:34px}
+  .hsubtitle-label{font-size:9px}
+  .hsubtitle{font-size:14px;letter-spacing:0.08em}
+  .hmeta-right{justify-content:flex-end;flex-wrap:wrap;gap:10px}
+  .hmeta-col{margin-right:0 !important;text-align:left}
+  .hmeta-val{font-size:13px}
+  .hperiod-badge{padding:5px 12px;font-size:11px}
+
+  /* Header bottom info bar: each item on its own line, label above value */
+  .header-bottom{flex-direction:column;align-items:flex-start;height:auto;padding:8px 1rem;gap:6px}
+  .hbar-item{flex-direction:column;align-items:flex-start;gap:2px;padding:0;border-right:none;font-size:12px;width:100%}
+
+  /* Stack KPI + rate cards one per row */
+  .kpi-grid{grid-template-columns:1fr}
+  .rate-row{grid-template-columns:1fr}
+
+  /* Tighter page padding (also set at 640; explicit here for consistency) */
+  .page{padding:1rem}
+}
 </style>
 </head>
 <body>
